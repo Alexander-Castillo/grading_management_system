@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Cycle extends Model
 {
     use HasFactory;
+    protected $table = 'cycle';
+    # un ciclo academico tiene muchos periodos
+    public function periods(){
+        return $this->hasMany(Period::class, 'cycle_id');
+    }
 }

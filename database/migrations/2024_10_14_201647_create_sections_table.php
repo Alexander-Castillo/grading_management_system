@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->string('section_name',25);
-            $table->foreignId('career_id')->references('id')->on('careers')->cascadeOnDelete();
-            $table->foreignId('specialty_id')->references('id')->on('specialities')->cascadeOnDelete();
             $table->timestamps();
         });
     }

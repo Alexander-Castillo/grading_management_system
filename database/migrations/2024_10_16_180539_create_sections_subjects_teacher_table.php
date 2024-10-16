@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enrollments', function (Blueprint $table) {
-            $table->foreignId('student_id')->references('id')->on('students')->cascadeOnDelete();
-            $table->foreignId('career_id')->constrained('sections')->cascadeOnDelete();
+        Schema::create('sections_subjects_teacher', function (Blueprint $table) {
+            $table->foreignId('teacher_id')->references('id')->on('teachers')->cascadeOnDelete();
             $table->foreignId('section_id')->references('id')->on('sections')->cascadeOnDelete();
             $table->foreignId('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
             $table->timestamps();
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enrollments');
+        Schema::dropIfExists('sections_subjects_teacher');
     }
 };
