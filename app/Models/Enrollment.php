@@ -9,11 +9,24 @@ class Enrollment extends Model
 {
     use HasFactory;
     protected $table = 'enrollments';
-    // # representa la relacion entre estudiantes y secciones
-    // public function student(){
-    //     return $this->belongsTo(Student::class, 'student_id');
-    // }
-    // public function section(){
-    //     return $this->belongsTo(Section::class, 'section_id');
-    // }
+    protected $fillable = [
+        'student_id',
+        'career_id',
+        'subject_id',
+        'section_id',
+    ];
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
 }

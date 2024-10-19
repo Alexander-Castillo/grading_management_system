@@ -18,6 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $table = 'users';
+    protected $fillable = [
+        'user_name',
+        'email',
+        'password',
+        'role',
+    ];
 
     # relacion de 1 a 1 de usuario con profesor
     public function teacher(){
@@ -26,12 +32,12 @@ class User extends Authenticatable
 
     # relacion de 1 a 1 de usuario con estudiante
     public function student(){
-        return $this->hasOne(Student::class, 'user_id');
+        return $this->hasOne(Student::class);
     }
 
     # relaciones de uno a muchos
     public function sections(){
-        return $this->hasMany(Section::class, 'enrollments','student_id','section_id');
+        return $this->hasMany(Section::class);
     }
 
 

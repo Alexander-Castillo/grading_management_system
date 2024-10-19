@@ -9,10 +9,20 @@ class Subject extends Model
 {
     use HasFactory;
     protected $table = 'subjects';
+    protected $fillable = [
+        'specialty_id',
+        'subject_name',
+        'description',
+    ];
 
     # una materia pertenece a una especialidad
     public function teacher(){
-        return $this->belongsTo(Specialities::class, 'specialty_id');
+        return $this->belongsToMany(Teacher::class, 'teacher_section_subject');
+    }
+    # una materia puede tener varias inscripciones
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
     }
     # una materia puede tener varias actividades
     public function activities(){
