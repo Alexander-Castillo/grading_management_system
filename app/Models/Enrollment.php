@@ -15,18 +15,23 @@ class Enrollment extends Model
         'subject_id',
         'section_id',
     ];
-    public function student()
-    {
+    // Una inscripción pertenece a un estudiante
+    public function student() {
         return $this->belongsTo(Student::class);
     }
 
-    public function subject()
-    {
+    // Una inscripción pertenece a una carrera
+    public function career() {
+        return $this->belongsTo(Career::class);
+    }
+
+    // Una inscripción pertenece a una materia
+    public function subject() {
         return $this->belongsTo(Subject::class);
     }
 
-    public function section()
-    {
+    // Una inscripción pertenece a una sección
+    public function section() {
         return $this->belongsTo(Section::class);
     }
 }

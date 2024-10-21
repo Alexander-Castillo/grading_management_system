@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $fillable = [
-        'user_name',
+        'name',
         'email',
         'password',
         'role',
@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     # relacion de 1 a 1 de usuario con profesor
     public function teacher(){
-        return $this->hasOne(Teacher::class, 'user_id');
+        return $this->hasOne(Teacher::class);
     }
 
     # relacion de 1 a 1 de usuario con estudiante

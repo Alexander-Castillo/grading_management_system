@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController; // Asegúrate de tener este controlador
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta principal
@@ -19,22 +21,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Ruta para administrar usuarios (solo para usuarios con permisos de administrador)
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.index');
+    //Route::get('/admin/teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
+    Route::resource('teachers', TeacherController::class);
+
+    /********************************************************************************************************************/
+    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
 });
 
-// Grupo de rutas para el administrador (protección con middleware 'can:admin-actions')
-Route::middleware(['auth', 'can:admin-actions'])->prefix('admin')->name('admin.')->group(function () {
-    // Registro de profesores
-    Route::get('/teachers', [UserController::class, 'showTeachers'])->name('teachers.index');
-    Route::get('/teachers/register', [UserController::class, 'showRegisterTeacherForm'])->name('teachers.register');
-    Route::post('/teachers/register', [UserController::class, 'registerTeacher'])->name('teachers.register.submit');
 
-    // Registro de estudiantes
-    Route::get('/students', [UserController::class, 'showStudents'])->name('students.index');
-    Route::get('/students/register', [UserController::class, 'showRegisterStudentForm'])->name('students.register');
-    Route::post('/students/register', [UserController::class, 'registerStudent'])->name('students.register.submit');
-
-    // Otras rutas de administración que puedas necesitar
-});
 
 // Cargar las rutas de autenticación predeterminadas
 require __DIR__ . '/auth.php';

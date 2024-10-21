@@ -12,9 +12,8 @@ class Teacher extends Model
     protected $fillable = [
         'user_id',
         'escalafon',
-        'specialization',
-        'birthdate',
-        'phone_number',
+        'teacher_birth_date',
+        'teacher_phone_number',
     ];
 
     # un maestro pertenece a un usuario
@@ -25,13 +24,13 @@ class Teacher extends Model
     # un maestro puede impartir varias secciones (sections)
     public function sections()
     {
-        return $this->belongsToMany(Section::class, 'teacher_section_subject');
+        return $this->belongsToMany(Section::class, 'sections_subjects_teacher', 'teacher_id', 'section_id');
     }
 
     # un maestro puede impartir varias materias (subjects)
     
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'teacher_section_subject');
+        return $this->belongsToMany(Subject::class, 'sections_subjects_teacher', 'teacher_id', 'subject_id');
     }
 }
