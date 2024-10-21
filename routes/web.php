@@ -1,5 +1,6 @@
 <?php
 
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\loginController;
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
 
     /********************************************************************************************************************/
     Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
+});
+Route::get('/inicio', function () {
+    return Inertia::render('Inicio');
 });
 
 
