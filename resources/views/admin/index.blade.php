@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Lista de Docentes</h1>
-    <table>
+    <h1 class="title">Lista de Docentes</h1>
+    <table class="table table-dark table-striped">
         <thead>
             <tr>
                 <th>Nombre del Docente</th>
@@ -26,5 +26,6 @@
             @endforelse
         </tbody>
     </table>
-    <a href="{{ route('teachers.create') }}">Add Teacher</a>
+    <button type="button" class="btn btn-success">
+    <a href="{{ route('teachers.create') }}">Add Teacher</a></button>
 @endsection

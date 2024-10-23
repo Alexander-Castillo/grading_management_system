@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Listado de estudiantes</h1>
-<table>
+<h1 class="title">Listado de estudiantes</h1>
+<table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>N. registro</th>
