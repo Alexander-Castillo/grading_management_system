@@ -25,21 +25,16 @@ class Student extends Model
 
     // Un estudiante puede estar inscrito en varias secciones a través de la tabla de inscripciones
     public function enrollments() {
-        return $this->hasMany(Enrollment::class);
+        return $this->hasOne(Enrollment::class);
     }
 
     // Un estudiante puede estar inscrito en varias carreras a través de la tabla de inscripciones
-    public function careers() {
-        return $this->belongsToMany(Career::class, 'enrollments', 'student_id', 'career_id');
+    public function career() {
+        return $this->hasOneThrough(Career::class, Enrollment::class);
     }
 
-    // Un estudiante puede estar inscrito en varias materias a través de la tabla de inscripciones
-    public function subjects() {
-        return $this->belongsToMany(Subject::class, 'enrollments', 'student_id', 'subject_id');
-    }
-
-    // Un estudiante puede estar inscrito en varias secciones a través de la tabla de inscripciones
-    public function sections() {
-        return $this->belongsToMany(Section::class, 'enrollments', 'student_id', 'section_id');
+    public function speciality()
+    {
+        return $this->hasOneThrough(Specialities::class, Enrollment::class);
     }
 }

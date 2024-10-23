@@ -28,7 +28,7 @@
                     <tr>
                         <td>cambiar estado</td>
                         <td>editar</td>
-                        <td>informacion</td>
+                        <a href="{{ route('students.show', $student->id) }}">informacion</a>
                     </tr>
                 </table>
                 </td>
@@ -36,4 +36,6 @@
         @endforeach
     </tbody>
 </table>
+
+<a href="{{ route('enrollments.showStudentForm') }}">Agregar estudiante</a>
 @endsection

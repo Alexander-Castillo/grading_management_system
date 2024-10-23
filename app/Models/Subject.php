@@ -32,4 +32,8 @@ class Subject extends Model
     public function students(){
         return $this->belongsToMany(Student::class, 'enrollments', 'subject_id', 'student_id');
     }
+    public function speciality()
+    {
+        return $this->belongsTo(Specialities::class);
+    }
 }

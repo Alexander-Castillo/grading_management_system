@@ -12,7 +12,7 @@ class Enrollment extends Model
     protected $fillable = [
         'student_id',
         'career_id',
-        'subject_id',
+        'specialities_id',
         'section_id',
     ];
     // Una inscripción pertenece a un estudiante
@@ -26,8 +26,8 @@ class Enrollment extends Model
     }
 
     // Una inscripción pertenece a una materia
-    public function subject() {
-        return $this->belongsTo(Subject::class);
+    public function speciality() {
+        return $this->belongsTo(Specialities::class);
     }
 
     // Una inscripción pertenece a una sección

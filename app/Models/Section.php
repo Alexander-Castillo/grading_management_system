@@ -23,6 +23,9 @@ class Section extends Model
     }
 
     // Relación uno a muchos con Enrollment
+    public function subject() {
+        return $this->belongsToMany(Subject::class, 'sections_subjects');
+    }
     public function enrollments() {
         return $this->hasMany(Enrollment::class);
     }

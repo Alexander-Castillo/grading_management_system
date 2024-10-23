@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->foreignId('student_id')->references('id')->on('students')->cascadeOnDelete();
-            $table->foreignId('career_id')->constrained('sections')->cascadeOnDelete();
-            $table->foreignId('section_id')->references('id')->on('sections')->cascadeOnDelete();
-            $table->foreignId('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
+            $table->foreignId('career_id')->constrained('careers');
+            $table->foreignId('specialities_id')->references('id')->on('specialities');
+            $table->foreignId('section_id')->constrained('sections');
             $table->timestamps();
+            // asegurando que un estudiante pueda tener solo una inscripcion
+            $table->unique(['student_id', 'career_id', 'specialities_id'], 'unique_enrollment');
         });
     }
 

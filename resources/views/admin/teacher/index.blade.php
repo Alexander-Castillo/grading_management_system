@@ -26,5 +26,5 @@
             @endforelse
         </tbody>
     </table>
-    <a href="{{ route('teachers.create') }}">Add Teacher</a>
+    <a href="{{ route('teachers.create') }}">Agregar docentes</a>
 @endsection

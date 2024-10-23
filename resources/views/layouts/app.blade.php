@@ -20,10 +20,10 @@
         <ul>
             @if(auth()->user()->role === 'admin')
                 <li><a href="#">Admins</a></li>
-                <li><a href="{{ route('admin.index') }}">Teachers</a></li>
+                <li><a href="{{ route('admin.teachers') }}">Teachers</a></li>
                 <li><a href="{{ route('admin.students') }}">Students</a></li>
             @elseif(auth()->user()->role === 'teacher')
-                <li><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+                <li><a href="#">Dashboard</a></li>
             @elseif(auth()->user()->role === 'student')
                 <li><a href="#">Dashboard</a></li>
             @endif

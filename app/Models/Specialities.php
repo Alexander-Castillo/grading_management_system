@@ -11,7 +11,8 @@ class Specialities extends Model
     protected $tabla = 'specialities';
 
     # una especialidad puede tener muchas secciones
-    public function sections(){
-        return $this->hasMany(Section::class, 'specialty_id');
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class, 'specialities_id');
     }
 }

@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController; // Asegúrate de tener este controlador
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,13 +25,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Ruta para administrar usuarios (solo para usuarios con permisos de administrador)
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.index');
+    //Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.teachers');
+    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
     //Route::get('/admin/teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
     Route::resource('teachers', TeacherController::class);
+    // Rutas de recurso para estudiantes
+    Route::resource('students', StudentController::class);
+    /********************************************************************************************************************/
 
     /********************************************************************************************************************/
-    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
+    Route::post('/enrollments/student', [EnrollmentController::class, 'enrollStudent'])->name('enrollments.student');
+    Route::post('/enrollments/subjects', [EnrollmentController::class, 'enrollInSubjects'])->name('enrollments.subjects');
+    Route::get('/enrollments/student', [EnrollmentController::class, 'showEnrollStudentForm'])->name('enrollments.showStudentForm');
+    Route::get('/enrollments/subjects/{studentId}', [EnrollmentController::class, 'showEnrollSubjectsForm'])->name('enrollments.showSubjectsForm');
 });
 
 

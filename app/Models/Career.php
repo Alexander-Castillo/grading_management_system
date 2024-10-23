@@ -14,15 +14,16 @@ class Career extends Model
     public function faculty(){
         return $this->belongsTo(Facultad::class,'facultad_id');
     }
-    # una carrera esta asociada con una facultad
-    public function sections(){
-        return $this->hasMany(Section::class. 'career_id');
-    }
+
     public function enrollments() {
         return $this->hasMany(Enrollment::class);
     }
     // Relación muchos a muchos con Students a través de enrollments
     public function students() {
         return $this->belongsToMany(Student::class, 'enrollments', 'career_id', 'student_id');
+    }
+    public function specialities()
+    {
+        return $this->belongsToMany(Specialities::class, 'career_specialty');
     }
 }

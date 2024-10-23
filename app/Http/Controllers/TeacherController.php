@@ -17,7 +17,7 @@ class TeacherController extends Controller
         // recuperamos datos de secciones
         $sections = Section::all();
         $subjects = Subject::all();
-        return view('teachers.create', compact('sections', 'subjects'));
+        return view('admin.teacher.create', compact('sections', 'subjects'));
     }
     // metodo para registrar
     public function store(Request $request)
@@ -60,7 +60,7 @@ class TeacherController extends Controller
             }
         }
         // redireccionamos a lista de profesores
-        return redirect()->route('admin.index')->with('success', 'Profesor creado exitosamente');
+        return redirect()->route('admin.teachers')->with('success', 'Profesor creado exitosamente');
     }
     public function show(Teacher $teacher)
     {
