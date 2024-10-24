@@ -57,7 +57,7 @@
 
                    
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                        All Rigth Reserved
+                        <div>All Rigth Reserved</div>
                         {{-- {{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) --}}
                     </footer>
                 </div>

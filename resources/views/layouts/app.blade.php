@@ -28,9 +28,9 @@
                 <a class="navbar-brand" href="#">Control Panel</a>
                 {{-- <button >
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button>--}}
 
-                <div class="collapse navbar-collapse" id="navbarScroll"> --}}
+                <div class="navbar" id="navbarScroll"> 
                     <ul class="navbar-nav me-auto my-2 my-lg-0" >
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Admins</a>
                         </li>
@@ -46,18 +46,40 @@
         @endif
         <form class="d-flex me-2" id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;" role="search">
         <button class="btn btn-outline-danger my-2 my-sm-0" type="submit"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></button>
-        
-        
             @csrf
         </form>
         </div>
         </div>
     </nav>
-    
     {{-- <img id="background" class="absolute -left-20 top-20 max-w-[1024px]" src="https://res.cloudinary.com/dhwarywdk/image/upload/v1729396614/banner_gyo1z5.jpg" alt="Universidad de la Vida" /> --}}
 
 
-    <div class="container">
+    <div class="container d-flex bg-center">
+        <a href="{{ route('dashboard') }}">
+        <div class="card teacher">
+           <h2 class="bg-center">Admins</h2>
+            <div class="container">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="54"  height="54"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" /><path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg>
+            </div>
+        </a>
+        </div>
+            <div class="card"> 
+                <a href="{{ route('admin.index') }}">
+                <h2>Teachers</h2>
+                 <div class="container">
+                     <svg  xmlns="http://www.w3.org/2000/svg"  width="54"  height="54"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" /><path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg>
+                 </div>
+                </a>
+            </div>
+                 <div class="card">
+                    <a  href="{{ route('admin.students') }}">
+                    <h2>Students</h2>
+                     <div class="container">
+                         <svg  xmlns="http://www.w3.org/2000/svg"  width="54"  height="54"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a5 5 0 1 1 -5 5l.005 -.217a5 5 0 0 1 4.995 -4.783z" /><path d="M14 14a5 5 0 0 1 5 5v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1a5 5 0 0 1 5 -5h4z" /></svg>
+                     </div>
+                    </a>
+                 </div>
+          </div>
         @yield('content')
     </div>
 </body>
