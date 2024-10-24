@@ -54,7 +54,7 @@
     {{-- <img id="background" class="absolute -left-20 top-20 max-w-[1024px]" src="https://res.cloudinary.com/dhwarywdk/image/upload/v1729396614/banner_gyo1z5.jpg" alt="Universidad de la Vida" /> --}}
 
 
-    <div class="container d-flex bg-center">
+    {{-- <div class="container d-flex bg-center">
         <a href="{{ route('dashboard') }}">
         <div class="card teacher">
            <h2 class="bg-center">Admins</h2>
@@ -79,7 +79,7 @@
                      </div>
                     </a>
                  </div>
-          </div>
+          </div> --}}
         @yield('content')
     </div>
 </body>
