@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('escalafon')->unique();
-            $table->date('teacher_birth_date');
+            $table->date('teacher_birthdate');
             $table->string('teacher_phone_number')->unique();
             $table->timestamps();
         });

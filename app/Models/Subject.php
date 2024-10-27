@@ -10,7 +10,7 @@ class Subject extends Model
     use HasFactory;
     protected $table = 'subjects';
     protected $fillable = [
-        'specialty_id',
+        'specialities_id',
         'subject_name',
         'description',
     ];
@@ -31,5 +31,8 @@ class Subject extends Model
     // Relación muchos a muchos con Students a través de enrollments
     public function students(){
         return $this->belongsToMany(Student::class, 'enrollments', 'subject_id', 'student_id');
+    }
+    public function speciality(){
+        return $this->belongsTo(Speciality::class);
     }
 }

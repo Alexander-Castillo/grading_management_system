@@ -17,7 +17,7 @@ class TeacherController extends Controller
         // recuperamos datos de secciones
         $sections = Section::all();
         $subjects = Subject::all();
-        return view('teachers.create', compact('sections', 'subjects'));
+        return view('admin.teacher.create', compact('sections', 'subjects'));
     }
     // metodo para registrar
     public function store(Request $request)
@@ -27,7 +27,7 @@ class TeacherController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'escalafon' => 'required|string',
-            'teacher_birth_date' => 'required|date',
+            'teacher_birthdate' => 'required|date',
             'teacher_phone_number' => 'required|string',
             'section_id' => 'required|array', // Cambiar a array para permitir múltiples secciones
             'section_id.*' => 'exists:sections,id', // Validar cada sección
@@ -46,7 +46,7 @@ class TeacherController extends Controller
         $teacher = Teacher::create([
             'user_id' => $user->id,
             'escalafon' => $request->escalafon,
-            'teacher_birth_date' => $request->teacher_birth_date,
+            'teacher_birthdate' => $request->teacher_birthdate,
             'teacher_phone_number' => $request->teacher_phone_number,
         ]);
         // Relacionar el profesor con secciones y materias
@@ -60,11 +60,17 @@ class TeacherController extends Controller
             }
         }
         // redireccionamos a lista de profesores
-        return redirect()->route('admin.index')->with('success', 'Profesor creado exitosamente');
+        return redirect()->route('admin.teacher.index')->with('success', 'Profesor creado exitosamente');
     }
     public function show(Teacher $teacher)
     {
-        $teacher->load('sections.subjects');
-        return view('admin.teacher.show', compact('teacher'));
+        $sections = DB::table('sections_subjects_teacher')
+        ->join('sections', 'sections.id', '=', 'sections_subjects_teacher.section_id')
+        ->join('subjects', 'subjects.id', '=', 'sections_subjects_teacher.subject_id')
+        ->where('sections_subjects_teacher.teacher_id', $teacher->id)
+        ->select('sections.id as section_id', 'sections.section_name', 'subjects.subject_name')
+        ->get()
+        ->groupBy('section_id');  // Agrupamos por sección
+        return view('admin.teacher.show', compact('teacher','sections'));
     }
 }

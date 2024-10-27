@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('cycle_id')->references('id')->on('cycles')->cascadeOnDelete();
             $table->foreignId('student_id')->references('id')->on('students')->cascadeOnDelete();
             $table->foreignId('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
-            $table->enum('status',['en proceso','aprovado','reprovado'])->default('en proceso');
+            $table->enum('status',['en proceso','aprobado','reprobado'])->default('en proceso');
             $table->double('grade',3,2);
             $table->timestamps();
         });

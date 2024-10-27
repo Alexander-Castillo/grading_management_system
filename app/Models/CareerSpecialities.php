@@ -14,7 +14,7 @@ class CareerSpecialities extends Model
 
     # una carrera puede estar en una o muchas especialidades
     public function specialities(){
-        return $this->belongsToMany(Specialities::class, 'career_specialities');
+        return $this->belongsToMany(Specialty::class, 'career_specialities');
     }
     # una especialidad puede estar en muchas carreras
     public function careers(){

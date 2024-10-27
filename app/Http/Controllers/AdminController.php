@@ -12,12 +12,18 @@ class AdminController extends Controller
     public function showTeacherList(){
         // mostrar listado de maestros
         $teachers = Teacher::with('user','sections','subjects')->get();
-        return view('admin.index', compact('teachers'));
+        return view('admin.teacher.index', compact('teachers'));
     }
     // mostrar listado de estudiantes
     public function showStudentList(){
-        // mostrar listado de estudiantes
-        $students = Student::with('user','careers','subjects','sections')->get();
-        return view('admin.students', compact('students'));
+        // obtener todos los estudiantes con la informacion necesaria
+        $students = Student::with([
+            'user',
+            'enrollment.career',
+            'enrollment.speciality',
+            'enrollment.sections.section.subjects'
+            ])
+        ->get();
+        return view('admin.student.index', compact('students'));
     }
 }

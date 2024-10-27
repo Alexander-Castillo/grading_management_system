@@ -12,7 +12,7 @@ class Teacher extends Model
     protected $fillable = [
         'user_id',
         'escalafon',
-        'teacher_birth_date',
+        'teacher_birthdate',
         'teacher_phone_number',
     ];
 

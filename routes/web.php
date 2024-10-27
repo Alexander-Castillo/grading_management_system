@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\UserController; // Asegúrate de tener este controlador
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,13 +23,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Ruta para administrar usuarios (solo para usuarios con permisos de administrador)
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.index');
+    //Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.teacher.index');
+    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.student.index');
     //Route::get('/admin/teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
     Route::resource('teachers', TeacherController::class);
-
+    Route::resource('students', StudentController::class);
     /********************************************************************************************************************/
-    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
+    Route::get('/admin/students/{id}', [StudentController::class, 'show'])->name('students.show');
 });
 
 

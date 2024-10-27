@@ -66,5 +66,5 @@
 
 
 
-    <a href="{{ route('admin.index') }}">Regresar a la lista de docentes</a>
+    <a href="{{ route('admin.teacher.index') }}">Regresar a la lista de docentes</a>
 @endsection
