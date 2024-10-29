@@ -7,8 +7,8 @@
     <p><strong>Email:</strong> {{ $student->user->email }}</p>
     <p><strong>Carnet:</strong> {{ $student->carnet }}</p>
     <p><strong>Carrera:</strong> {{ $student->enrollment->career->career_name }}</p>
-    <p><strong>Especialidad:</strong> {{ $student->enrollment->speciality->specialty_name }}</p>
-    
+    <p><strong>Especialidad:</strong> {{ $student->enrollment->speciality->speciality_name }}</p>
+
     <h2>Secciones y Materias</h2>
     <table class="table">
         <thead>
@@ -21,12 +21,15 @@
         <tbody>
             @foreach($student->enrollment->sections as $enrollmentSection)
                 @php
-                    // Obtener la sección
                     $section = $enrollmentSection->section;
-                    // Obtener los docentes únicos
+
+                    // Obtener docentes únicos para evitar repeticiones
                     $teachers = $section->teachers->unique('id');
-                    // Obtener las materias únicas
-                    $subjects = $section->subjects->where('specialities_id', $student->enrollment->speciality->id)->unique('id');
+
+                    // Filtrar materias por la especialidad del estudiante
+                    $subjects = $section->subjects
+                        ->where('speciality_id', $student->enrollment->speciality->id)
+                        ->unique('id');
                 @endphp
                 <tr>
                     <td>{{ $section->section_name }}</td>

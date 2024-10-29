@@ -12,7 +12,7 @@ class SectionController extends Controller
     {
         // Obtener secciones que tienen materias relacionadas con la especialidad
     $sections = Section::whereHas('subjects', function ($query) use ($specialityId) {
-        $query->where('specialities_id', $specialityId);
+        $query->where('speciality_id', $specialityId);
     })
     ->whereHas('teachers')
     ->with(['subjects', 'teachers.user']) // Asegurarse de cargar los usuarios de los docentes

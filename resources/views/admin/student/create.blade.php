@@ -46,8 +46,8 @@
         </div>
 
         <div class="form-group">
-            <label for="specialities_id">Especialidad</label>
-            <select name="specialities_id" id="specialities_id" class="form-control" required>
+            <label for="speciality_id">Especialidad</label>
+            <select name="speciality_id" id="speciality_id" class="form-control" required>
                 <!-- Las especialidades se cargarán dinámicamente -->
             </select>
         </div>
@@ -70,10 +70,10 @@
         fetch(`/api/specialities/${careerId}`)
             .then(response => response.json())
             .then(data => {
-                const specialitySelect = document.getElementById('specialities_id');
+                const specialitySelect = document.getElementById('speciality_id');
                 specialitySelect.innerHTML = '';
                 data.forEach(speciality => {
-                    specialitySelect.innerHTML += `<option value="${speciality.id}">${speciality.specialty_name}</option>`;
+                    specialitySelect.innerHTML += `<option value="${speciality.id}">${speciality.speciality_name}</option>`;
                 });
 
                 // Limpiar secciones al cambiar la carrera
@@ -82,7 +82,7 @@
             });
 
         // Agregar evento para cargar secciones al cambiar la especialidad
-        document.getElementById('specialities_id').addEventListener('change', function() {
+        document.getElementById('speciality_id').addEventListener('change', function() {
             const specialityId = this.value;
 
             // Cargar secciones relacionadas a la especialidad

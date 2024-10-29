@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enrollment;
 use App\Models\Section;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -65,12 +66,41 @@ class TeacherController extends Controller
     public function show(Teacher $teacher)
     {
         $sections = DB::table('sections_subjects_teacher')
-        ->join('sections', 'sections.id', '=', 'sections_subjects_teacher.section_id')
-        ->join('subjects', 'subjects.id', '=', 'sections_subjects_teacher.subject_id')
-        ->where('sections_subjects_teacher.teacher_id', $teacher->id)
-        ->select('sections.id as section_id', 'sections.section_name', 'subjects.subject_name')
-        ->get()
-        ->groupBy('section_id');  // Agrupamos por sección
-        return view('admin.teacher.show', compact('teacher','sections'));
+            ->join('sections', 'sections.id', '=', 'sections_subjects_teacher.section_id')
+            ->join('subjects', 'subjects.id', '=', 'sections_subjects_teacher.subject_id')
+            ->where('sections_subjects_teacher.teacher_id', $teacher->id)
+            ->select('sections.id as section_id', 'sections.section_name', 'subjects.subject_name')
+            ->get()
+            ->groupBy('section_id');  // Agrupamos por sección
+        return view('admin.teacher.show', compact('teacher', 'sections'));
     }
+
+    public function showStudentsForTeacher()
+{
+    // Obtener el usuario autenticado
+    $user = auth()->user();
+
+    // Verificar si el usuario tiene el rol 'teacher'
+    if ($user && $user->role === 'teacher') {
+        // Obtener el docente asociado al usuario
+        $teacher = $user->teacher;
+
+        // Obtener las secciones y materias que imparte el docente
+        $sections = $teacher->sections()->with('subjects')->get();
+
+        // Obtener los estudiantes inscritos en las secciones del docente
+        $students = Enrollment::with(['student.user', 'sections.section.subjects', 'speciality'])
+            ->whereHas('sections', function ($query) use ($sections) {
+                $query->whereIn('section_id', $sections->pluck('id'));
+            })
+            ->get();
+
+        return view('teacher.students.index', compact('teacher', 'sections', 'students'));
+    } else {
+        // Redirigir o mostrar un error si el rol no es 'teacher'
+        return redirect()->route('login')->with('error', 'Acceso no autorizado.');
+    }
+}
+
+
 }

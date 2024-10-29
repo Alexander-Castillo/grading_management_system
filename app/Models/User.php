@@ -26,7 +26,8 @@ class User extends Authenticatable
     ];
 
     # relacion de 1 a 1 de usuario con profesor
-    public function teacher(){
+    public function teacher()
+    {
         return $this->hasOne(Teacher::class);
     }
 

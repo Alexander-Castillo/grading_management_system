@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sections_subjects', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('section_id')->references('id')->on('sections')->cascadeOnDelete();
             $table->foreignId('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
             $table->timestamps();

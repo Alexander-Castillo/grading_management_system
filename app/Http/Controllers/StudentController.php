@@ -15,21 +15,23 @@ class StudentController extends Controller
     
     public function show($id)
 {
-    // Obtener la información completa del estudiante
+    // Obtener al estudiante junto con las relaciones necesarias
     $student = Student::with([
         'user', 
         'enrollment.career', 
         'enrollment.speciality', 
-        'enrollment.sections.section.subjects',
-        'enrollment.sections.section.teachers.user' // Para cargar los docentes
-    ])
-    ->findOrFail($id);
+        'enrollment.sections.section' => function ($query) use ($id) {
+            $query->whereHas('subjects', function ($q) use ($id) {
+                // Filtramos por la especialidad del estudiante
+                $student = Student::findOrFail($id);
+                $q->where('speciality_id', $student->enrollment->speciality->id);
+            });
+        },
+        'enrollment.sections.section.teachers.user' // Cargar los docentes
+    ])->findOrFail($id);
 
     return view('admin.student.show', compact('student'));
 }
-
-
-
     public function create(){
         //cargar carreras y especialidades para los selects
         $careers = Career::all();
@@ -47,7 +49,7 @@ class StudentController extends Controller
             'carnet' => 'required|string|unique:students',
             'student_birthdate' => 'required|date',
             'career_id' => 'required|exists:careers,id',
-            'specialities_id' => 'required|exists:specialities,id',
+            'speciality_id' => 'required|exists:specialities,id',
             'section_ids' => 'required|array', //para las secciones seleccionadas 
         ]);
         $nombre = $request->first_name . ' ' . $request->last_name;
@@ -69,7 +71,7 @@ class StudentController extends Controller
         $enrollment = Enrollment::create([
             'student_id' => $student->id,
             'career_id' => $request->career_id,
-            'specialities_id' => $request->specialities_id,
+            'speciality_id' => $request->speciality_id,
         ]);
         // insertar en enrollment_sections
         foreach ($request->section_ids as $section_id){

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->references('id')->on('students')->unique()->cascadeOnDelete();
             $table->foreignId('career_id')->constrained('sections','id')->cascadeOnDelete();
-            $table->foreignId('specialities_id')->references('id')->on('specialities')->cascadeOnDelete();
+            $table->foreignId('speciality_id')->references('id')->on('specialities')->cascadeOnDelete();
             $table->timestamps();
         });
     }
