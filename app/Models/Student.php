@@ -13,7 +13,7 @@ class Student extends Model
     protected $fillable = [
         'user_id',
         'carnet',
-        'birthdate',
+        'student_birth_date',
         'is_active',
         'phone_number',
     ];

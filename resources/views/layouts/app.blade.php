@@ -39,10 +39,25 @@
                         <li class="nav-item"><a class="nav-link active"
                                 href="{{ route('admin.students') }}">Students</a></li>
                     @elseif(auth()->user()->role === 'teacher')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('teachers.index') }}">Dashboard</a></li>
                         @elseif(auth()->user()->role === 'student')
-                        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-                    </ul>
+                        <div class="container mt-5">
+                            <h1>Bienvenido al Dashboard de Estudiantes</h1>
+                    
+                            <div class="list-group mt-4">
+                                <a href="{{ route('students.activities') }}" class="list-group-item list-group-item-action">
+                                    Ver Actividades
+                                </a>
+                                <a href="{{ route('students.profile') }}" class="list-group-item list-group-item-action">
+                                    Perfil del Estudiante
+                                </a>
+                                <a href="{{ route('students.grades') }}" class="list-group-item list-group-item-action">
+                                    Ver Calificaciones
+                                </a>
+                                <!-- Agrega más opciones según sea necesario -->
+                            </div>
+                        </div>
+                        </ul>
         @endif
         <form class="d-flex me-2" id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;" role="search">
         <button class="btn btn-outline-danger my-2 my-sm-0" type="submit"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></button>

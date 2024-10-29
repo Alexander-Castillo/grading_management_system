@@ -4,8 +4,11 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\loginController;
+use App\Http\Controllers\GradesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ActivitiesController;
 
 // Ruta principal
 Route::get('/', function () {
@@ -25,12 +28,18 @@ Route::middleware('auth')->group(function () {
 
     // Ruta para administrar usuarios (solo para usuarios con permisos de administrador)
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.index');
+    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.indexTeacher');
     //Route::get('/admin/teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
     Route::resource('teachers', TeacherController::class);
 
     /********************************************************************************************************************/
     Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
+    Route::resource('students', StudentController::class);
+  
+    Route::get('/students/activities', [ActivitiesController::class, 'getActivities'])->name('students.activities');
+    Route::get('/students/profile', [ProfileController::class, 'showProfile'])->name('students.profile');
+    Route::get('/students/grades', [GradesController::class, 'showGrades'])->name('students.grades');
+    Route::resource('student', StudentController::class);
 });
 Route::get('/inicio', function () {
     return Inertia::render('Inicio');
