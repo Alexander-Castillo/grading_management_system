@@ -9,6 +9,15 @@ class Activities extends Model
 {
     use HasFactory;
     protected $table = 'activities';
+    protected $fillable = [
+        'subject_id',
+        'activity_name',
+        'activity_description',
+        'due_date',
+        'new_due_date',
+        'activity_percent',
+        'total_grade',
+    ];
     # una actividad pertenece a una materia
     public function subject(){
         return $this->belongsTo(Subject::class, 'subject_id');

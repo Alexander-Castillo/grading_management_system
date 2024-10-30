@@ -4,6 +4,36 @@
 <div class="container mx-auto p-6 max-w-2xl bg-white shadow-lg rounded-lg">
     <h1 class="text-2xl font-bold mb-6 text-center">Detalles del Docente</h1>
 
+<table>
+    <thead>
+        <tr>
+            <th>Campo</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Nombre:</strong></td>
+            <td>{{ $teacher->user->name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Email:</strong></td>
+            <td>{{ $teacher->user->email }}</td>
+        </tr>
+        <tr>
+            <td><strong>Escalafón:</strong></td>
+            <td>{{ $teacher->escalafon }}</td>
+        </tr>
+        <tr>
+            <td><strong>Fecha de Nacimiento:</strong></td>
+            <td>{{ $teacher->teacher_birthdate }}</td>
+        </tr>
+        <tr>
+            <td><strong>Teléfono:</strong></td>
+            <td>{{ $teacher->teacher_phone_number }}</td>
+        </tr>
+    </tbody>
+</table>
     <table class="w-full mb-6 border border-gray-200 rounded-lg">
         <thead>
             <tr class="bg-gray-100">

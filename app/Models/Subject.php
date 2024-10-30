@@ -36,4 +36,10 @@ class Subject extends Model
     {
         return $this->belongsTo(Specialities::class);
     }
+    // Relación con Section a través de la tabla intermedia sections_subjects_teacher
+    public function sections()
+    {
+        return $this->belongsToMany(Section::class, 'sections_subjects_teacher')
+            ->withTimestamps();
+    }
 }

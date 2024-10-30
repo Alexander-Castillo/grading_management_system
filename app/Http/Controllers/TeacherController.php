@@ -8,6 +8,7 @@ use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
@@ -75,10 +76,36 @@ class TeacherController extends Controller
         return view('admin.teacher.show', compact('teacher', 'sections'));
     }
 
-    public function showStudentsForTeacher()
+//     public function showStudentsForTeacher()
+// {
+//     // Obtener el usuario autenticado
+//     $user = auth()->user();
+
+//     // Verificar si el usuario tiene el rol 'teacher'
+//     if ($user && $user->role === 'teacher') {
+//         // Obtener el docente asociado al usuario
+//         $teacher = $user->teacher;
+
+//         // Obtener las secciones y materias que imparte el docente
+//         $sections = $teacher->sections()->with('subjects')->get();
+
+//         // Obtener los estudiantes inscritos en las secciones del docente
+//         $students = Enrollment::with(['student.user', 'sections.section.subjects', 'speciality'])
+//             ->whereHas('sections', function ($query) use ($sections) {
+//                 $query->whereIn('section_id', $sections->pluck('id'));
+//             })
+//             ->get();
+
+//         return view('teacher.students.index', compact('teacher', 'sections', 'students'));
+//     } else {
+//         // Redirigir o mostrar un error si el rol no es 'teacher'
+//         return redirect()->route('login')->with('error', 'Acceso no autorizado.');
+//     }
+// }
+public function showStudentsForTeacher()
 {
     // Obtener el usuario autenticado
-    $user = auth()->user();
+    $user = Auth::user();
 
     // Verificar si el usuario tiene el rol 'teacher'
     if ($user && $user->role === 'teacher') {
@@ -88,11 +115,27 @@ class TeacherController extends Controller
         // Obtener las secciones y materias que imparte el docente
         $sections = $teacher->sections()->with('subjects')->get();
 
-        // Obtener los estudiantes inscritos en las secciones del docente
-        $students = Enrollment::with(['student.user', 'sections.section.subjects', 'speciality'])
-            ->whereHas('sections', function ($query) use ($sections) {
-                $query->whereIn('section_id', $sections->pluck('id'));
-            })
+        // Obtener los estudiantes inscritos en las secciones del docente y con la especialidad correspondiente
+        $students = DB::table('enrollment_sections')
+            ->join('enrollments', 'enrollment_sections.enrollment_id', '=', 'enrollments.id')
+            ->join('sections', 'enrollment_sections.section_id', '=', 'sections.id')
+            ->join('sections_subjects_teacher', 'sections.id', '=', 'sections_subjects_teacher.section_id')
+            ->join('subjects', 'sections_subjects_teacher.subject_id', '=', 'subjects.id')
+            ->join('specialities', 'subjects.speciality_id', '=', 'specialities.id')
+            ->join('students', 'enrollments.student_id', '=', 'students.id')
+            ->join('users as e', 'students.user_id', '=', 'e.id')
+            ->join('teachers', 'sections_subjects_teacher.teacher_id', '=', 'teachers.id')
+            ->join('users as d', 'teachers.user_id', '=', 'd.id')
+            ->where('teachers.id', $teacher->id)
+            ->select(
+                'e.name as student_name',
+                'e.email as student_email',
+                'students.carnet',
+                'sections.section_name',
+                'subjects.subject_name',
+                'specialities.speciality_name',
+                'd.name as teacher_name'
+            )
             ->get();
 
         return view('teacher.students.index', compact('teacher', 'sections', 'students'));
@@ -101,6 +144,5 @@ class TeacherController extends Controller
         return redirect()->route('login')->with('error', 'Acceso no autorizado.');
     }
 }
-
 
 }

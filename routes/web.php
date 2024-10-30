@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EnrollmentController;
@@ -32,6 +33,21 @@ Route::middleware('auth')->group(function () {
     Route::resource('teachers', TeacherController::class);
     // Rutas de recurso para estudiantes
     Route::resource('students', StudentController::class);
+});
+
+// Rutas para Teachers
+Route::middleware(['auth', RoleMiddleware::class . ':teacher'])->group(function () {
+    Route::get('/teacher/students', [TeacherController::class, 'showStudentsForTeacher'])->name('teacher.students');
+    Route::resource('activities', ActivitiesController::class);
+    //Route::get('/activities/create', [ActivitiesController::class, 'create'])->name('activities.create');
+    //Route::post('/activities/store', [ActivitiesController::class, 'store'])->name('activities.store');
+});
+
+// Rutas para Students
+Route::middleware(['auth', RoleMiddleware::class . ':student'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
     /********************************************************************************************************************/
 
     /********************************************************************************************************************/
