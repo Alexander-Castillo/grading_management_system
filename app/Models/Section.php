@@ -25,9 +25,9 @@ class Section extends Model
     }
 
     // Relación muchos a muchos con Subjects
-    public function subjects() {
-        return $this->belongsToMany(Subject::class, 'sections_subjects_teacher', 'section_id', 'subject_id');
-    }
+    // public function subjects() {
+    //     return $this->belongsToMany(Subject::class, 'sections_subjects_teacher', 'section_id', 'subject_id');
+    // }
 
     // Relación uno a muchos con Enrollment
     public function subject() {

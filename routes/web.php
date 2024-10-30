@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     // Ruta para administrar usuarios (solo para usuarios con permisos de administrador)
     //Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.teachers');
-    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
+    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.student.index');
     //Route::get('/admin/teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
     Route::resource('teachers', TeacherController::class);
     // Rutas de recurso para estudiantes
