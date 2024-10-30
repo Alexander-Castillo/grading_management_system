@@ -10,7 +10,7 @@ class Speciality extends Model
     use HasFactory;
     protected $tabla = 'specialities';
     protected $fillable = [
-        'specialtiy_name',
+        'specialty_name',
         'speciality_description',
     ];
     public function career(){
