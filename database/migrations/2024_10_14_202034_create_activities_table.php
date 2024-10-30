@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('activity_name');
             $table->string('activity_description');
             $table->date('due_date');
-            $table->date('new_due_date');
+            $table->date('new_due_date')->nullable();
             $table->integer('activity_percent');
             $table->double('total_grade',3,2);
             $table->timestamps();
