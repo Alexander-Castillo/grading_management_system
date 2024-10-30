@@ -12,7 +12,8 @@ class Enrollment extends Model
     protected $fillable = [
         'student_id',
         'career_id',
-        'speciality_id',
+        'specialities_id',
+        'section_id',
     ];
     public function student(){
         return $this->belongsTo(Student::class);
@@ -20,8 +21,10 @@ class Enrollment extends Model
     public function career(){
         return $this->belongsTo(Career::class);
     }
-    public function speciality(){
-        return $this->belongsTo(Speciality::class, 'speciality_id');
+
+    // Una inscripción pertenece a una materia
+    public function speciality() {
+        return $this->belongsTo(Specialities::class);
     }
     public function sections(){
         return $this->hasMany(EnrollmentSections::class, 'enrollment_id');

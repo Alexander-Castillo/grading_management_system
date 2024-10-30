@@ -65,10 +65,7 @@
         </tbody>
     </table>
 
-    <div class="text-center">
-        <a href="{{ route('admin.teacher.index') }}" class="text-blue-500 hover:text-blue-700 font-semibold">
-            Regresar a la lista de docentes
-        </a>
-    </div>
-</div>
+
+
+    <a href="{{ route('admin.teachers') }}">Regresar a la lista de docentes</a>
 @endsection

@@ -1,38 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto max-w-4xl p-6 bg-white shadow-lg rounded-lg">
-    <h1 class="text-2xl font-bold mb-6 text-center">Lista de Estudiantes</h1>
-
-    <table class="w-full table-auto bg-gray-100 shadow-md rounded-lg">
-        <thead>
-            <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
-                <th class="py-3 px-6 text-left">Nombre</th>
-                <th class="py-3 px-6 text-left">Email</th>
-                <th class="py-3 px-6 text-left">Carnet</th>
-                <th class="py-3 px-6 text-center">Acciones</th>
+<h1>Listado de estudiantes</h1>
+<table>
+    <thead>
+        <tr>
+            <th>N. registro</th>
+            <th>Numero de Carnet</th>
+            <th>Estado</th>
+            <th>Nombre del Estudiante</th>
+            <th>Correo</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($students as $index => $student)
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $student->carnet }}</td>
+                <td>{{ $student->is_active ? 'Activo' : 'Inactivo' }}</td>
+                <td>{{ $student->user->name }}</td>
+                <td>{{ $student->user->email }}</td>
+                <td>{{ $student->student_birth_date }}</td>
+                <td>
+                <table>
+                    <tr>
+                        <td>cambiar estado</td>
+                        <td>editar</td>
+                        <a href="{{ route('students.show', $student->id) }}">informacion</a>
+                    </tr>
+                </table>
+                </td>
             </tr>
-        </thead>
-        <tbody class="text-gray-700 text-sm font-light">
-            @foreach($students as $student)
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-6">{{ $student->user->name }}</td>
-                    <td class="py-3 px-6">{{ $student->user->email }}</td>
-                    <td class="py-3 px-6">{{ $student->carnet }}</td>
-                    <td class="py-3 px-6 text-center">
-                        <a href="{{ route('students.show', $student->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
-                            Ver Información
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        @endforeach
+    </tbody>
+</table>
 
-    <div class="mt-6 flex justify-center">
-        <a href="{{ route('students.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Agregar nuevo estudiante
-        </a>
-    </div>
-</div>
+<a href="{{ route('enrollments.showStudentForm') }}">Agregar estudiante</a>
 @endsection

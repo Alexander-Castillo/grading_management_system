@@ -3,83 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Career;
-use App\Models\Enrollment;
-use App\Models\EnrollmentSections;
+use App\Models\Section;
+use App\Models\Specialities;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    //
-    
-    public function show($id)
-{
-    // Obtener al estudiante junto con las relaciones necesarias
-    $student = Student::with([
-        'user', 
-        'enrollment.career', 
-        'enrollment.speciality', 
-        'enrollment.sections.section' => function ($query) use ($id) {
-            $query->whereHas('subjects', function ($q) use ($id) {
-                // Filtramos por la especialidad del estudiante
-                $student = Student::findOrFail($id);
-                $q->where('speciality_id', $student->enrollment->speciality->id);
-            });
-        },
-        'enrollment.sections.section.teachers.user' // Cargar los docentes
-    ])->findOrFail($id);
-
-    return view('admin.student.show', compact('student'));
-}
     public function create(){
-        //cargar carreras y especialidades para los selects
+        // recuperamos los datos a mostrar en los select
         $careers = Career::all();
-
-        return view('admin.student.create', compact('careers'));
+        $subjects = Subject::all();
+        $sections = Section::all();
+        return view('students.create', compact('careers','subjects','sections'));
     }
-
+    public function show(Student $student){
+        // Cargar los datos del estudiante y sus inscripciones
+    $student->load('enrollments.career.specialities', 'enrollments.section.subjects');
+        return view('admin.student.show', compact('student'));
+    }
     public function store(Request $request){
-        //validacion de datos a recibir
+        // validacion de datos que recibiremos por request
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'carnet' => 'required|string|unique:students',
-            'student_birthdate' => 'required|date',
-            'career_id' => 'required|exists:careers,id',
-            'speciality_id' => 'required|exists:specialities,id',
-            'section_ids' => 'required|array', //para las secciones seleccionadas 
+            // validacion de datos
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'carnet' => 'required|string|unique:students,carnet',
+            'student_birth_date' => 'required|date',
         ]);
-        $nombre = $request->first_name . ' ' . $request->last_name;
-        // crear el usuario
+        // creamos un usuario
+        $estudiante = $request->first_name .' '. $request->last_name;
         $user = User::create([
-            'name' => $nombre,
+            'name' => $estudiante,
             'email' => $request->email,
+            'role' => 'student',
             'password' => password_hash($request->password, PASSWORD_BCRYPT),
-            'role' => 'student', //rol predefinido
         ]);
-        // creando el estudiante
-        $student = Student::create([
+        // creamos el estudiante
+        Student::create([
             'user_id' => $user->id,
             'carnet' => $request->carnet,
-            'student_birthdate' => $request->student_birthdate,
+            'student_birth_date' => $request->student_birth_date,
             'is_active' => true, // por defecto
         ]);
-        // creando la inscripcion 
-        $enrollment = Enrollment::create([
-            'student_id' => $student->id,
-            'career_id' => $request->career_id,
-            'speciality_id' => $request->speciality_id,
-        ]);
-        // insertar en enrollment_sections
-        foreach ($request->section_ids as $section_id){
-            EnrollmentSections::create([
-                'enrollment_id' => $enrollment->id,
-                'section_id' => $section_id,
-            ]);
-        }
-        return redirect()->route('admin.student.index')->with('success', 'Estudiante creado correctamente');
+
+        return redirect()->route('admin.student.index')->with('success', 'Estudiante creado exitosamente');
     }
 }

@@ -8,52 +8,25 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Tailwind CSS -->
-    @vite('resources/css/app.css')
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body>
-
-
-
-    {{-- <nav class="bg-gray-800 p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <ul class="flex space-x-4">
-                @auth
-                    @if (auth()->user()->role === 'admin')
-                        <li>
-                            <a href="href="{{ route('admin.teacher.index') }}" class="text-white hover:text-gray-300">Teachers</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.student.index') }}" class="text-white hover:text-gray-300">Students</a>
-                        </li>
-                    @elseif(auth()->user()->role === 'teacher')
-                        <li>
-                            <a href="{{ route('teacher.students') }}" class="text-white hover:text-gray-300">Estudiantes</a>
-                        </li>
-                    @elseif(auth()->user()->role === 'student')
-                        <li>
-                            <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-300">Dashboard</a>
-                        </li>
-                    @endif
-            </ul>
-            
-            <div class="ml-auto">
-                <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                    class="text-white hover:text-gray-300">
-                    Logout
-                </a>
-            </div>
-            
-            @endauth
-        </div>
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        
+    <nav>
+        <ul>
+            @if(auth()->user()->role === 'admin')
+                <li><a href="#">Admins</a></li>
+                <li><a href="{{ route('admin.teachers') }}">Teachers</a></li>
+                <li><a href="{{ route('admin.students') }}">Students</a></li>
+            @elseif(auth()->user()->role === 'teacher')
+                <li><a href="#">Dashboard</a></li>
+            @elseif(auth()->user()->role === 'student')
+                <li><a href="#">Dashboard</a></li>
+            @endif
+            <li><a href="{{ route('logout') }}" 
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+        </ul>
     </nav>
     
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

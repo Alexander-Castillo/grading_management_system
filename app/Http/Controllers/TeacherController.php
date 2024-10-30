@@ -61,7 +61,7 @@ class TeacherController extends Controller
             }
         }
         // redireccionamos a lista de profesores
-        return redirect()->route('admin.teacher.index')->with('success', 'Profesor creado exitosamente');
+        return redirect()->route('admin.teachers')->with('success', 'Profesor creado exitosamente');
     }
     public function show(Teacher $teacher)
     {
