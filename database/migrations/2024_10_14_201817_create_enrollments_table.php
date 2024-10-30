@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('enrollments', function (Blueprint $table) {
-            $table->foreignId('student_id')->references('id')->on('students')->cascadeOnDelete();
-            $table->foreignId('career_id')->constrained('sections')->cascadeOnDelete();
-            $table->foreignId('section_id')->references('id')->on('sections')->cascadeOnDelete();
-            $table->foreignId('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
+            $table->id();
+            $table->foreignId('student_id')->references('id')->on('students')->unique()->cascadeOnDelete();
+            $table->foreignId('career_id')->constrained('careers','id')->cascadeOnDelete();
+            $table->foreignId('speciality_id')->references('id')->on('specialities')->cascadeOnDelete();
             $table->timestamps();
         });
     }

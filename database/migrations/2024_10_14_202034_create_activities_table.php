@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
-            $table->foreignId('period_id')->references('id')->on('periods')->cascadeOnDelete();
             $table->string('activity_name');
+            $table->string('activity_description');
             $table->date('due_date');
             $table->date('new_due_date');
             $table->integer('activity_percent');

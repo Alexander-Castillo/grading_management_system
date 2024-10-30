@@ -9,6 +9,11 @@ class Criteria extends Model
 {
     use HasFactory;
     protected $table = 'criteria';
+    protected $fillable = [
+        'activity_id',
+        'criterion_name',
+        'criterion_percent'
+    ];
     # un criterio pertenece a una actividad
     public function activity(){
         return $this->belongsTo(Activities::class, 'activity_id');

@@ -12,26 +12,18 @@ class Enrollment extends Model
     protected $fillable = [
         'student_id',
         'career_id',
-        'subject_id',
-        'section_id',
+        'speciality_id',
     ];
-    // Una inscripción pertenece a un estudiante
-    public function student() {
+    public function student(){
         return $this->belongsTo(Student::class);
     }
-
-    // Una inscripción pertenece a una carrera
-    public function career() {
+    public function career(){
         return $this->belongsTo(Career::class);
     }
-
-    // Una inscripción pertenece a una materia
-    public function subject() {
-        return $this->belongsTo(Subject::class);
+    public function speciality(){
+        return $this->belongsTo(Speciality::class, 'speciality_id');
     }
-
-    // Una inscripción pertenece a una sección
-    public function section() {
-        return $this->belongsTo(Section::class);
+    public function sections(){
+        return $this->hasMany(EnrollmentSections::class, 'enrollment_id');
     }
 }

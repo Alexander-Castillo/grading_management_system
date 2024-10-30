@@ -1,48 +1,42 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\loginController;
-use App\Http\Controllers\GradesController;
+use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\ActivitiesController;
+use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\loginController;
+use App\Http\Controllers\GradesController;
+
 
 // Ruta principal
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Ruta del dashboard (solo para usuarios autenticados y verificados)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// Grupo de rutas protegidas para perfil de usuario
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // Ruta para administrar usuarios (solo para usuarios con permisos de administrador)
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.indexTeacher');
-    //Route::get('/admin/teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
+// Rutas para Admin
+Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
+    Route::get('/admin/teachers', [AdminController::class, 'showTeacherList'])->name('admin.teacher.index');
+    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.student.index');
     Route::resource('teachers', TeacherController::class);
-
-    /********************************************************************************************************************/
-    Route::get('/admin/students', [AdminController::class, 'showStudentList'])->name('admin.students');
     Route::resource('students', StudentController::class);
-  
-    Route::get('/students/activities', [ActivitiesController::class, 'getActivities'])->name('students.activities');
-    Route::get('/students/profile', [ProfileController::class, 'showProfile'])->name('students.profile');
-    Route::get('/students/grades', [GradesController::class, 'showGrades'])->name('students.grades');
-    Route::resource('student', StudentController::class);
 });
-Route::get('/inicio', function () {
-    return Inertia::render('Inicio');
+
+// Rutas para Teachers
+Route::middleware(['auth', RoleMiddleware::class . ':teacher'])->group(function () {
+    Route::get('/teacher/students', [TeacherController::class, 'showStudentsForTeacher'])->name('teacher.students');
+    Route::resource('activities', ActivitiesController::class);
+    //Route::get('/activities/create', [ActivitiesController::class, 'create'])->name('activities.create');
+    //Route::post('/activities/store', [ActivitiesController::class, 'store'])->name('activities.store');
+});
+
+// Rutas para Students
+Route::middleware(['auth', RoleMiddleware::class . ':student'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 
 

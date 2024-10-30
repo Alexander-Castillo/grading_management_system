@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <td><strong>Fecha de Nacimiento:</strong></td>
-            <td>{{ $teacher->teacher_birth_date }}</td>
+            <td>{{ $teacher->teacher_birthdate }}</td>
         </tr>
         <tr>
             <td><strong>Teléfono:</strong></td>
@@ -66,5 +66,5 @@
 
 
 
-    <a href="{{ route('admin.index') }}">Regresar a la lista de docentes</a>
+    <a href="{{ route('admin.teacher.index') }}">Regresar a la lista de docentes</a>
 @endsection
