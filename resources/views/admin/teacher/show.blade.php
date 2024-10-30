@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <td><strong>Fecha de Nacimiento:</strong></td>
-            <td>{{ $teacher->teacher_birth_date }}</td>
+            <td>{{ $teacher->teacher_birthdate }}</td>
         </tr>
         <tr>
             <td><strong>Teléfono:</strong></td>

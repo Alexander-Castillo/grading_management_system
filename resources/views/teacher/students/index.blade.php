@@ -51,40 +51,25 @@
                 <th>Nombre del Estudiante</th>
                 <th>Email</th>
                 <th>Carnet</th>
-                <th>Secciones</th>
+                <th>Sección</th>
                 <th>Especialidad</th>
                 <th>Materias</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($students as $enrollment)
+            @foreach($students as $student)
                 <tr>
-                    <td>{{ $enrollment->student->user->name }}</td>
-                    <td>{{ $enrollment->student->user->email }}</td>
-                    <td>{{ $enrollment->student->carnet }}</td>
-                    <td>
-                        <ul>
-                            @foreach($enrollment->sections as $section)
-                                <li>{{ $section->section->section_name ?? 'No hay sección asignada' }}</li>
-                            @endforeach
-                        </ul>
-                    </td>
-                    <td>{{ $enrollment->speciality->speciality_name ?? 'No hay especialidad asignada' }}</td>
-                    <td>
-                        <ul>
-                            @foreach($enrollment->sections as $section)
-                                @foreach($section->section->subjects as $subject)
-                                    @if($subject->speciality_id == $enrollment->speciality_id)
-                                        <li>{{ $subject->subject_name }}</li>
-                                    @endif
-                                @endforeach
-                            @endforeach
-                        </ul>
-                    </td>
+                    <td>{{ $student->student_name }}</td>
+                    <td>{{ $student->student_email }}</td>
+                    <td>{{ $student->carnet }}</td>
+                    <td>{{ $student->section_name }}</td>
+                    <td>{{ $student->speciality_name }}</td>
+                    <td>{{ $student->subject_name }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <a href="{{ route('activities.create') }}">Add Activity</a>
 </div>
 @endsection
 

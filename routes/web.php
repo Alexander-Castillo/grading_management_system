@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
@@ -23,6 +24,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
 // Rutas para Teachers
 Route::middleware(['auth', RoleMiddleware::class . ':teacher'])->group(function () {
     Route::get('/teacher/students', [TeacherController::class, 'showStudentsForTeacher'])->name('teacher.students');
+    Route::resource('activities', ActivitiesController::class);
+    //Route::get('/activities/create', [ActivitiesController::class, 'create'])->name('activities.create');
+    //Route::post('/activities/store', [ActivitiesController::class, 'store'])->name('activities.store');
 });
 
 // Rutas para Students

@@ -16,21 +16,34 @@ class Teacher extends Model
         'teacher_phone_number',
     ];
 
-    # un maestro pertenece a un usuario
-    public function user(){
-        return $this->belongsTo(User::class);
+    /**
+     * Un maestro pertenece a un usuario.
+     * Si el usuario no está asociado, se evita un error usando withDefault.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id')->withDefault();
     }
 
-    # un maestro puede impartir varias secciones (sections)
+    /**
+     * Un maestro puede impartir varias secciones.
+     * Relación many-to-many con la tabla intermedia 'sections_subjects_teacher'.
+     */
     public function sections()
     {
-        return $this->belongsToMany(Section::class, 'sections_subjects_teacher', 'teacher_id', 'section_id');
+        return $this->belongsToMany(Section::class, 'sections_subjects_teacher', 'teacher_id', 'section_id')
+            ->withPivot('subject_id') // Agrega campos adicionales de la tabla intermedia
+            ->withTimestamps();
     }
 
-    # un maestro puede impartir varias materias (subjects)
-    
+    /**
+     * Un maestro puede impartir varias materias.
+     * Relación many-to-many con la tabla intermedia 'sections_subjects_teacher'.
+     */
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'sections_subjects_teacher', 'teacher_id', 'subject_id');
+        return $this->belongsToMany(Subject::class, 'sections_subjects_teacher', 'teacher_id', 'subject_id')
+            ->withPivot('section_id') // Agrega campos adicionales de la tabla intermedia
+            ->withTimestamps();
     }
 }

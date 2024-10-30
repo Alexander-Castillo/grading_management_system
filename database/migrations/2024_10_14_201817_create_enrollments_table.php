@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->references('id')->on('students')->unique()->cascadeOnDelete();
-            $table->foreignId('career_id')->constrained('sections','id')->cascadeOnDelete();
+            $table->foreignId('career_id')->constrained('careers','id')->cascadeOnDelete();
             $table->foreignId('speciality_id')->references('id')->on('specialities')->cascadeOnDelete();
             $table->timestamps();
         });
