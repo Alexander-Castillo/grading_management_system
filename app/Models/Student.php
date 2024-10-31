@@ -17,13 +17,20 @@ class Student extends Model
         'is_active',
     ];
 
-     // Un estudiante pertenece a un usuario
-    public function user() {
+    // Un estudiante pertenece a un usuario
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
     // Un estudiante puede tener solo una inscripcion
-    public function enrollment() {
+    public function enrollment()
+    {
         return $this->hasOne(Enrollment::class);
+    }
+    // Relación con las entregas
+    public function submissions()
+    {
+        return $this->hasMany(Submissions::class);
     }
 }

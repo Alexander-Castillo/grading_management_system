@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\GradeCalculatorInterface as InterfacesGradeCalculatorInterface;
+use App\Services\WeightedGradeCalculator as ServicesWeightedGradeCalculator;
+use GradeCalculatorInterface;
 use Illuminate\Support\ServiceProvider;
+use WeightedGradeCalculator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(InterfacesGradeCalculatorInterface::class, ServicesWeightedGradeCalculator::class);
     }
 
     /**
@@ -21,4 +25,5 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+    
 }

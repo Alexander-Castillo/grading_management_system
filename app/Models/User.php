@@ -9,15 +9,20 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Nombre de la tabla
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * Atributos que se pueden asignar masivamente
      *
      * @var array<int, string>
      */
-    protected $table = 'users';
     protected $fillable = [
         'name',
         'email',
@@ -25,26 +30,8 @@ class User extends Authenticatable
         'role',
     ];
 
-    # relacion de 1 a 1 de usuario con profesor
-    public function teacher()
-    {
-        return $this->hasOne(Teacher::class);
-    }
-
-    # relacion de 1 a 1 de usuario con estudiante
-    public function student(){
-        return $this->hasOne(Student::class);
-    }
-
-    # relaciones de uno a muchos
-    public function sections(){
-        return $this->hasMany(Section::class);
-    }
-
-
-
     /**
-     * The attributes that should be hidden for serialization.
+     * Atributos que deben ocultarse para la serialización.
      *
      * @var array<int, string>
      */
@@ -54,15 +41,53 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Atributos que deben ser convertidos.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    /**
+     * Comprueba si el usuario tiene un rol específico.
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole($role)
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->role === $role;
+    }
+
+    /**
+     * Relación de 1 a 1 con el modelo Teacher.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+
+    /**
+     * Relación de 1 a 1 con el modelo Student.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    /**
+     * Relación de 1 a muchos con el modelo Section.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
     }
 }

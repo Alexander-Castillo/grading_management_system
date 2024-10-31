@@ -26,8 +26,9 @@
             <li><a href="{{ route('admin.student.index') }}">Students</a></li>
             @elseif(auth()->user()->role === 'teacher')
             <li><a href="{{ route('teacher.students') }}">Estudiantes</a></li>
+            <li><a href="{{ route('activities.index') }}">Actividades</a></li>
             @elseif(auth()->user()->role === 'student')
-            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li><a href="#">Dashboard</a></li>
             @endif
             <li>
                 <a href="{{ route('logout') }}"

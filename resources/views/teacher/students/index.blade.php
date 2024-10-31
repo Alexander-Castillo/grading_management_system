@@ -69,7 +69,7 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ route('activities.create') }}">Add Activity</a>
+    
 </div>
 @endsection
 

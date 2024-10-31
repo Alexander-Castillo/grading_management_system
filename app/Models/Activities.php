@@ -10,6 +10,7 @@ class Activities extends Model
     use HasFactory;
     protected $table = 'activities';
     protected $fillable = [
+        'teacher_id',
         'subject_id',
         'activity_name',
         'activity_description',
@@ -29,5 +30,19 @@ class Activities extends Model
     # una actividad puede tener varios criterios de evaluacion
     public function criteria(){
         return $this->hasMany(Criteria::class, 'activity_id');
+    }
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+    // Relación con las entregas (submissions)
+    public function submissions()
+    {
+        return $this->hasMany(Submissions::class);
+    }
+    // Relación con los estudiantes a través de las entregas
+    public function students()
+    {
+        return $this->hasManyThrough(Student::class, Submissions::class);
     }
 }
