@@ -7,6 +7,7 @@ use App\Models\Criteria;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ActivitiesController extends Controller
 {
@@ -77,15 +78,29 @@ class ActivitiesController extends Controller
     return redirect()->route('activities.index')->with('success', 'Activity and criteria created successfully.');
 }
 
-    public function index()
-    {
-        $user = Auth::user();
+public function index()
+{
+    $user = Auth::user();
 
-        // Obtener las actividades del docente
-        $activities = Activities::where('teacher_id', $user->id)->get();
+    // Verificar si el usuario tiene rol 'teacher'
+    if ($user && $user->role === 'teacher') {
+        // Obtener el `teacher_id` del usuario en sesión desde la relación con `teachers`
+        $teacherId = DB::table('teachers')
+            ->where('user_id', $user->id)
+            ->value('id');
+
+        // Consultar las actividades que pertenecen a este docente usando SQL en Laravel
+        $activities = DB::table('activities')
+            ->select('id','activity_name', 'activity_description', 'due_date', 'new_due_date', 'activity_percent')
+            ->where('teacher_id', $teacherId)
+            ->get();
 
         return view('teacher.activities.index', compact('activities'));
+    } else {
+        return redirect()->route('login')->with('error', 'Access Denied.');
     }
+}
+
     public function edit($id)
     {
         $new_due_date = Activities::where('id', $id)->value('new_due_date');
