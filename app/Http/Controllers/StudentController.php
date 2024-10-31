@@ -15,34 +15,36 @@ use Illuminate\Support\Facades\Auth;
 class StudentController extends Controller
 {
     //
-    
-    public function show($id)
-{
-    // Obtener al estudiante junto con las relaciones necesarias
-    $student = Student::with([
-        'user', 
-        'enrollment.career', 
-        'enrollment.speciality', 
-        'enrollment.sections.section' => function ($query) use ($id) {
-            $query->whereHas('subjects', function ($q) use ($id) {
-                // Filtramos por la especialidad del estudiante
-                $student = Student::findOrFail($id);
-                $q->where('speciality_id', $student->enrollment->speciality->id);
-            });
-        },
-        'enrollment.sections.section.teachers.user' // Cargar los docentes
-    ])->findOrFail($id);
 
-    return view('admin.student.show', compact('student'));
-}
-    public function create(){
+    public function show($id)
+    {
+        // Obtener al estudiante junto con las relaciones necesarias
+        $student = Student::with([
+            'user',
+            'enrollment.career',
+            'enrollment.speciality',
+            'enrollment.sections.section' => function ($query) use ($id) {
+                $query->whereHas('subjects', function ($q) use ($id) {
+                    // Filtramos por la especialidad del estudiante
+                    $student = Student::findOrFail($id);
+                    $q->where('speciality_id', $student->enrollment->speciality->id);
+                });
+            },
+            'enrollment.sections.section.teachers.user' // Cargar los docentes
+        ])->findOrFail($id);
+
+        return view('admin.student.show', compact('student'));
+    }
+    public function create()
+    {
         //cargar carreras y especialidades para los selects
         $careers = Career::all();
 
         return view('admin.student.create', compact('careers'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         //validacion de datos a recibir
         $request->validate([
             'first_name' => 'required|string|max:255',
@@ -77,7 +79,7 @@ class StudentController extends Controller
             'speciality_id' => $request->speciality_id,
         ]);
         // insertar en enrollment_sections
-        foreach ($request->section_ids as $section_id){
+        foreach ($request->section_ids as $section_id) {
             EnrollmentSections::create([
                 'enrollment_id' => $enrollment->id,
                 'section_id' => $section_id,
@@ -86,17 +88,30 @@ class StudentController extends Controller
         return redirect()->route('admin.student.index')->with('success', 'Estudiante creado correctamente');
     }
     public function dashboard()
-{
-    $student = Auth::user()->student;
-    $activities = Activities::whereHas('sections.students', function ($query) use ($student) {
-        $query->where('student_id', $student->id);
-    })->get();
+    {
+        $student = Auth::user()->student;
+        $activities = Activities::whereHas('sections.students', function ($query) use ($student) {
+            $query->where('student_id', $student->id);
+        })->get();
 
-    return view('dashboard', compact('activities'));
-}
-public function actividad(){
-    $actividad = Activities::whereHas('teachers', function ($query) use ($teachers){
-        $query->where('teachers_id', $teachers->id);
-    })->get();
-}
+        return view('dashboard', compact('activities'));
+    }
+    public function actividad()
+    {
+            $activities = DB::table('activities')
+            ->join('teachers', 'activities.teacher_id', '=', 'teachers.id')
+            ->join('subjects', 'activities.subject_id', '=', 'subjects.id')
+            ->join('sections_subjects_teacher', 'subjects.id', '=', 'sections_subjects_teacher.subject_id')
+            ->join('sections', 'sections_subjects_teacher.section_id', '=', 'sections.id')
+            ->join('enrollment_sections', 'sections_subject_teacher.section_id', '=', 'enrollment_sections.section_id')
+            ->join('enrollments', 'enrollments_sections.enrollment_id', '=', 'enrollments.id')
+            ->join('students', 'enrollments.student_id', '=', 'students.id')
+            ->join('users', 'students.user_id', '=', 'users.id')
+            ->join('users', 'teachers.user_id', '=', 'users.id')
+            ->join('sections', 'enrollment_sections.section_id', '=', 'sections.id')
+            ->select('activities.id', 'teachers.name', 'sections.section_name', 'subjects.subject_name', 'activities.activity_name', 'activities.due_date', 'users.name', 'sections.section_name')
+            ->get();
+            dd($activities);
+            return view('dump', compact('activities'));
+    }
 }

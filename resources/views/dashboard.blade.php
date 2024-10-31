@@ -16,7 +16,7 @@
     </div>
 </x-app-layout> --}}
 @extends('layouts.app')
-@extends('admin.student.activities')
+{{-- @extends('admin.student.activities') --}}
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -40,10 +40,42 @@
                         @csrf
                         <div class="form-group">
                             <label for="activity_id">Activity:</label>
+                          
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Section_name</th>
+                                        <th>Subject_name</th>
+                                        <th>Activity_name</th>
+                                        <th>Due_date</th>
+                                        <th>Name</th>
+                                        <th>Section_name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                        {{dd($activities)}}
+                                   
+                                    @foreach ($activities as $activity)
+                                        
+                                   
+                                    <tr>
+                                        <td>{{ $activity->id }}</td>
+                                        <td>{{ $activity->name }}</td>
+                                        <td>{{ $activity->section_name }}</td>
+                                        <td>{{ $activity->subject_name }}</td>
+                                        <td>{{ $activity->activitie_name }}</td>
+                                        <td>{{ $activity->due_date }}</td>
+                                        <td>{{ $activity->name }}</td>
+                                        <td>{{ $activity->section_name }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             <select class="form-control" id="activity_id" name="activity_id">
-                                @foreach ($student->enrollment->speciality->activities as $activity)
-                                    <option value="{{ $activity->id }}">{{ $activity->name }}</option>
-                                @endforeach
+                               
                             </select>
                         </div>
                         <div class="form-group">

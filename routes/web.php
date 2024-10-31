@@ -38,7 +38,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':student'])->group(function 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    
+    Route::get('/dump', function () {
+        return view('dump');
+    })->name('dump');
 });
 
 Route::middleware(['auth', 'role:student'])->group(function () {
