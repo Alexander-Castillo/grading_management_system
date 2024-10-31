@@ -38,7 +38,9 @@
 
         <div class="mb-4">
             <label for="career_id" class="block text-gray-700 font-medium mb-2">Carrera</label>
+            
             <select name="career_id" id="career_id" class="form-select w-full p-2 border border-gray-300 rounded-lg" required>
+                <option value="">Select a Subject and Section</option>
                 @foreach($careers as $career)
                     <option value="{{ $career->id }}">{{ $career->career_name }}</option>
                 @endforeach
@@ -49,13 +51,16 @@
             <label for="speciality_id" class="block text-gray-700 font-medium mb-2">Especialidad</label>
             <select name="speciality_id" id="speciality_id" class="form-select w-full p-2 border border-gray-300 rounded-lg" required>
                 <!-- Las especialidades se cargarán dinámicamente -->
+                <option value="">Select a Subject and Section</option>
             </select>
         </div>
 
         <div class="mb-4">
             <label for="section_ids" class="block text-gray-700 font-medium mb-2">Secciones</label>
+
             <select name="section_ids[]" id="section_ids" class="form-select w-full p-2 border border-gray-300 rounded-lg" multiple required>
                 <!-- Las secciones se cargarán dinámicamente -->
+                <option value="">Select a Subject and Section</option>
             </select>
         </div>
 
