@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <h1>Registrar Estudiante</h1>
+    <div>
     <form action="{{ route('students.store') }}" method="POST">
         @csrf
 
@@ -60,6 +61,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Registrar Estudiante</button>
+    </div>
     </form>
 </div>
 <script>

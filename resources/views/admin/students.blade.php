@@ -22,7 +22,7 @@
                 <td>{{ $student->is_active ? 'Activo' : 'Inactivo' }}</td>
                 <td>{{ $student->user->name }}</td>
                 <td>{{ $student->user->email }}</td>
-                <td>{{ $student->student_birth_date }}</td>
+                <td>{{ $student->student_birthdate }}</td>
                 <td>
                 <table>
                     <tr>

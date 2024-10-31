@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Career;
-use App\Models\Enrollment;
-use App\Models\EnrollmentSections;
-use App\Models\Student;
+use App\Models\Activities;
 use App\Models\User;
+use App\Models\Career;
+use App\Models\Student;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use App\Models\EnrollmentSections;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -83,4 +85,18 @@ class StudentController extends Controller
         }
         return redirect()->route('admin.student.index')->with('success', 'Estudiante creado correctamente');
     }
+    public function dashboard()
+{
+    $student = Auth::user()->student;
+    $activities = Activities::whereHas('sections.students', function ($query) use ($student) {
+        $query->where('student_id', $student->id);
+    })->get();
+
+    return view('dashboard', compact('activities'));
+}
+public function actividad(){
+    $actividad = Activities::whereHas('teachers', function ($query) use ($teachers){
+        $query->where('teachers_id', $teachers->id);
+    })->get();
+}
 }

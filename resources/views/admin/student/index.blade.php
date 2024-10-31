@@ -25,6 +25,7 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ route('students.create') }}">Agregar nuevo estudiante</a>
+    <button type="button" class="btn btn-success">
+    <a href="{{ route('students.create') }}">Agregar nuevo estudiante</a></button>
 </div>
 @endsection

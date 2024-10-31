@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\ActivitiesController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TeacherController;
-use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\GradesController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\SubmissionsController;
 
 
 // Ruta principal
@@ -37,8 +38,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':student'])->group(function 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    
 });
 
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::post('/submissions', [SubmissionsController::class, 'create'])->name('submissions.create');
+});
 
 
 // Cargar las rutas de autenticación predeterminadas

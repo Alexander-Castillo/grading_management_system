@@ -20,5 +20,8 @@
         "vue": "^3.5.12",
         "vue-loader": "^17.4.2",
         "vuetify": "^3.7.3"
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.3"
     }
 }

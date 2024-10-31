@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="modal-footer" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -64,7 +64,7 @@
                       
                         
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Registrar estudiante</button>
+                        <button type="button" class="btn btn-success">Registrar estudiante</button>
                     </div>
             </div>
         </div>

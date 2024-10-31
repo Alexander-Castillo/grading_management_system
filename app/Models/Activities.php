@@ -30,4 +30,5 @@ class Activities extends Model
     public function criteria(){
         return $this->hasMany(Criteria::class, 'activity_id');
     }
+    
 }
