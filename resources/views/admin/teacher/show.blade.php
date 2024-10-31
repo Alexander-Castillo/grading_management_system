@@ -1,70 +1,74 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Detalles del Docente</h1>
+<div class="container mx-auto p-6 max-w-2xl bg-white shadow-lg rounded-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center">Detalles del Docente</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Campo</th>
-            <th>Valor</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Nombre:</strong></td>
-            <td>{{ $teacher->user->name }}</td>
-        </tr>
-        <tr>
-            <td><strong>Email:</strong></td>
-            <td>{{ $teacher->user->email }}</td>
-        </tr>
-        <tr>
-            <td><strong>Escalafón:</strong></td>
-            <td>{{ $teacher->escalafon }}</td>
-        </tr>
-        <tr>
-            <td><strong>Fecha de Nacimiento:</strong></td>
-            <td>{{ $teacher->teacher_birthdate }}</td>
-        </tr>
-        <tr>
-            <td><strong>Teléfono:</strong></td>
-            <td>{{ $teacher->teacher_phone_number }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<h2>Secciones y Materias</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Sección</th>
-            <th>Materias</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if($teacher->sections->isEmpty())
+    <table class="min-w-full bg-white">
+        <thead>
             <tr>
-                <td colspan="2">No hay secciones asignadas.</td>
+                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">Campo</th>
+                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">Valor</th>
             </tr>
-        @else
-            @foreach($teacher->sections->unique('id') as $section)
+        </thead>
+        <tbody>
+            <tr>
+                <td class="py-2 px-4 border-b border-gray-200"><strong>Nombre:</strong></td>
+                <td class="py-2 px-4 border-b border-gray-200">{{ $teacher->user->name }}</td>
+            </tr>
+            <tr>
+                <td class="py-2 px-4 border-b border-gray-200"><strong>Email:</strong></td>
+                <td class="py-2 px-4 border-b border-gray-200">{{ $teacher->user->email }}</td>
+            </tr>
+            <tr>
+                <td class="py-2 px-4 border-b border-gray-200"><strong>Escalafón:</strong></td>
+                <td class="py-2 px-4 border-b border-gray-200">{{ $teacher->escalafon }}</td>
+            </tr>
+            <tr>
+                <td class="py-2 px-4 border-b border-gray-200"><strong>Fecha de Nacimiento:</strong></td>
+                <td class="py-2 px-4 border-b border-gray-200">{{ $teacher->teacher_birthdate }}</td>
+            </tr>
+            <tr>
+                <td class="py-2 px-4 border-b border-gray-200"><strong>Teléfono:</strong></td>
+                <td class="py-2 px-4 border-b border-gray-200">{{ $teacher->teacher_phone_number }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="text-xl font-semibold mt-6 mb-4 text-center">Secciones y Materias</h2>
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">Sección</th>
+                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm leading-4 font-medium text-gray-600 uppercase tracking-wider">Materias</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if($teacher->sections->isEmpty())
                 <tr>
-                    <td>{{ $section->section_name }}</td>
-                    <td>
-                        <ul>
-                            @foreach($section->subjects as $subject)
-                                <li>{{ $subject->subject_name }}</li>
-                            @endforeach
-                        </ul>
-                    </td>
+                    <td colspan="2" class="py-2 px-4 border-b border-gray-200 text-center">No hay secciones asignadas.</td>
                 </tr>
-            @endforeach
-        @endif
-    </tbody>
-</table>
+            @else
+                @foreach($teacher->sections->unique('id') as $section)
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200">{{ $section->section_name }}</td>
+                        <td class="py-2 px-4 border-b border-gray-200">
+                            <ul class="list-disc list-inside">
+                                @foreach($section->subjects as $subject)
+                                    <li>{{ $subject->subject_name }}</li>
+                                @endforeach
+                            </ul>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+        </tbody>
+    </table>
 
-
-
-    <a href="{{ route('admin.teacher.index') }}">Regresar a la lista de docentes</a>
+    <div class="text-center mt-6">
+        <a href="{{ route('admin.teacher.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+            Regresar a la lista de docentes
+        </a>
+    </div>
+</div>
 @endsection
