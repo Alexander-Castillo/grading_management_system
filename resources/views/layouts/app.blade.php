@@ -18,33 +18,59 @@
 
 <body class="font-sans antialiased">
 
-    <nav>
-        <ul>
+    <nav class="bg-blue-800 p-4 shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <ul class="flex space-x-4">
+                @auth
+                    @if (auth()->user()->role === 'admin')
+                        <li>
+                            <a href="{{ route('admin.teacher.index') }}"
+                                class="text-white font-bold hover:text-gray-300 transition duration-300">Teachers</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.student.index') }}"
+                                class="text-white font-bold hover:text-gray-300 transition duration-300">Students</a>
+                        </li>
+                    @elseif(auth()->user()->role === 'teacher')
+                        <li>
+                            <a href="{{ route('teacher.students') }}"
+                                class="text-white font-bold hover:text-gray-300 transition duration-300">Estudiantes</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('activities.index') }}"
+                                class="text-white font-bold hover:text-gray-300 transition duration-300">Actividades</a>
+                        </li>
+                    @elseif(auth()->user()->role === 'student')
+                        <li>
+                            <a href="{{ route('dashboard') }}"
+                                class="text-white font-bold hover:text-gray-300 transition duration-300">Dashboard</a>
+                        </li>
+                    @endif
+                @endauth
+            </ul>
+            <span class="text-white font-bold">Welcome to the Admin Dashboard</span>
             @auth
-            @if(auth()->user()->role === 'admin')
-            <li><a href="{{ route('admin.teacher.index') }}">Teachers</a></li>
-            <li><a href="{{ route('admin.student.index') }}">Students</a></li>
-            @elseif(auth()->user()->role === 'teacher')
-            <li><a href="{{ route('teacher.students') }}">Estudiantes</a></li>
-            <li><a href="{{ route('activities.index') }}">Actividades</a></li>
-            @elseif(auth()->user()->role === 'student')
-            <li><a href="#">Dashboard</a></li>
-            @endif
-            <li>
-                <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-            </li>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="text-white font-bold hover:text-gray-300 transition duration-300 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V5m0 6H3"></path>
+                        </svg>
+                        Logout
+                    </a>
+                </div>
             @endauth
-        </ul>
+        </div>
     </nav>
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
 
-    <div class="container">
+    <div class="container mx-auto flex justify-center mt-8 mb-8">
         @yield('content')
     </div>
 </body>
