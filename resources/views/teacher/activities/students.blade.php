@@ -35,8 +35,8 @@
                                 </ul>
                             @endif
                         </td>
-                        <td class="py-2 px-4 border-b border-gray-200">
-                            <a href="{{ route('submission.grade', [$activity->id, $student->id]) }}" class="text-blue-500 hover:underline">Calificar</a>
+                        <td>
+                            <a href="{{ route('submission.gradeForm', [$activity->id, $student->id]) }}">Calificar</a>
                         </td>
                     </tr>
                 @endforeach

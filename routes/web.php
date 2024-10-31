@@ -36,6 +36,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':teacher'])->group(function 
     Route::put('/activities/{id}', [ActivitiesController::class, 'activityUpdate'])->name('activities.activityUpdate');
     Route::get('/activities/{activity}/students', [GradesController::class, 'showStudents'])->name('activities.students'); // Muestra estudiantes en la actividad
     Route::get('/activities/{activity}/students/{student}/submission', [SubmissionsController::class, 'showSubmission'])->name('submission.show'); // Muestra la tarea subida
+    Route::get('/activities/{activity}/students/{student}/grade', [GradesController::class, 'showGradeForm'])->name('submission.gradeForm');
     Route::post('/activities/{activity}/students/{student}/grade', [GradesController::class, 'gradeSubmission'])->name('submission.grade'); // Califica la tarea del estudiante
 });
 

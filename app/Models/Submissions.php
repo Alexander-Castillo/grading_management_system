@@ -27,6 +27,6 @@ class Submissions extends Model
     }
     public function criteriaGrades()
     {
-        return $this->hasMany(SubmissionCriteiaGrades::class);
+        return $this->hasMany(SubmissionCriteiaGrades::class, 'submission_id');
     }
 }
