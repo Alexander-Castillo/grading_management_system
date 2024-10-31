@@ -1,65 +1,74 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Registrar Estudiante</h1>
+<div class="container mx-auto max-w-2xl p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-2xl font-bold mb-4">Registrar Estudiante</h1>
     <form action="{{ route('students.store') }}" method="POST">
         @csrf
 
-        <div class="form-group">
-            <label for="first_name">Nombre</label>
-            <input type="text" name="first_name" class="form-control" required>
+        <div class="mb-4">
+            <label for="first_name" class="block text-gray-700 font-medium mb-2">Nombre</label>
+            <input type="text" name="first_name" class="form-input w-full p-2 border border-gray-300 rounded-lg" required>
         </div>
 
-        <div class="form-group">
-            <label for="last_name">Apellido</label>
-            <input type="text" name="last_name" class="form-control" required>
+        <div class="mb-4">
+            <label for="last_name" class="block text-gray-700 font-medium mb-2">Apellido</label>
+            <input type="text" name="last_name" class="form-input w-full p-2 border border-gray-300 rounded-lg" required>
         </div>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" required>
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+            <input type="email" name="email" class="form-input w-full p-2 border border-gray-300 rounded-lg" required>
         </div>
 
-        <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input type="password" name="password" class="form-control" required>
+        <div class="mb-4">
+            <label for="password" class="block text-gray-700 font-medium mb-2">Contraseña</label>
+            <input type="password" name="password" class="form-input w-full p-2 border border-gray-300 rounded-lg" required>
         </div>
 
-        <div class="form-group">
-            <label for="carnet">Carnet</label>
-            <input type="text" name="carnet" class="form-control" required>
+        <div class="mb-4">
+            <label for="carnet" class="block text-gray-700 font-medium mb-2">Carnet</label>
+            <input type="text" name="carnet" class="form-input w-full p-2 border border-gray-300 rounded-lg" required>
         </div>
 
-        <div class="form-group">
-            <label for="student_birthdate">Fecha de Nacimiento</label>
-            <input type="date" name="student_birthdate" class="form-control" required>
+        <div class="mb-4">
+            <label for="student_birthdate" class="block text-gray-700 font-medium mb-2">Fecha de Nacimiento</label>
+            <input type="date" name="student_birthdate" class="form-input w-full p-2 border border-gray-300 rounded-lg" required>
         </div>
 
-        <div class="form-group">
-            <label for="career_id">Carrera</label>
-            <select name="career_id" id="career_id" class="form-control" required>
+        <div class="mb-4">
+            <label for="career_id" class="block text-gray-700 font-medium mb-2">Carrera</label>
+            <select name="career_id" id="career_id" class="form-select w-full p-2 border border-gray-300 rounded-lg" required>
                 @foreach($careers as $career)
                     <option value="{{ $career->id }}">{{ $career->career_name }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="speciality_id">Especialidad</label>
-            <select name="speciality_id" id="speciality_id" class="form-control" required>
+        <div class="mb-4">
+            <label for="speciality_id" class="block text-gray-700 font-medium mb-2">Especialidad</label>
+            <select name="speciality_id" id="speciality_id" class="form-select w-full p-2 border border-gray-300 rounded-lg" required>
                 <!-- Las especialidades se cargarán dinámicamente -->
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="section_ids">Secciones</label>
-            <select name="section_ids[]" id="section_ids" class="form-control" multiple required>
+        <div class="mb-4">
+            <label for="section_ids" class="block text-gray-700 font-medium mb-2">Secciones</label>
+            <select name="section_ids[]" id="section_ids" class="form-select w-full p-2 border border-gray-300 rounded-lg" multiple required>
                 <!-- Las secciones se cargarán dinámicamente -->
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Registrar Estudiante</button>
+        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+            Registrar Estudiante
+        </button>
+
+        <div class="text-center mt-4">
+            <a href="{{ route('admin.student.index') }}" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                Volver a la lista de estudiantes
+            </a>
+        </div>        
+
     </form>
 </div>
 <script>
