@@ -1,42 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto p-6 max-w-4xl bg-white shadow-md rounded-lg">
-    <h1 class="text-2xl font-semibold mb-4">Mis Actividades</h1>
+<div class="container">
+    <h1>Mis Actividades</h1>
 
     @if ($activities->isEmpty())
-    <p class="text-gray-600">No tienes actividades creadas.</p>
+    <p>No tienes actividades creadas.</p>
     @else
-    <table class="min-w-full bg-white">
+    <table>
         <thead>
             <tr>
-                <th class="py-2 px-4 border-b border-gray-200">Nombre de Actividad</th>
-                <th class="py-2 px-4 border-b border-gray-200">Descripción</th>
-                <th class="py-2 px-4 border-b border-gray-200">Fecha de Entrega</th>
-                <th class="py-2 px-4 border-b border-gray-200">Fecha Extendida</th>
-                <th class="py-2 px-4 border-b border-gray-200">Porcentaje de Actividad</th>
-                <th class="py-2 px-4 border-b border-gray-200">Acciones</th>
+                <th>Nombre de Actividad</th>
+                <th>Descripción</th>
+                <th>Fecha de Entrega</th>
+                <th>fecha extendida</th>
+                <th>Porcentaje de Actividad</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($activities as $activity)
             <tr>
-                <td class="py-2 px-4 border-b border-gray-200">{{ $activity->activity_name }}</td>
-                <td class="py-2 px-4 border-b border-gray-200">{{ $activity->activity_description }}</td>
-                <td class="py-2 px-4 border-b border-gray-200">{{ $activity->due_date }}</td>
-                <td class="py-2 px-4 border-b border-gray-200">{{ $activity->new_due_date }}</td>
-                <td class="py-2 px-4 border-b border-gray-200">{{ $activity->activity_percent }}%</td>
-                <td class="py-2 px-4 border-b border-gray-200">
-                    <a href="{{ route('activities.editActivity', $activity->id) }}" class="text-blue-500 hover:underline">Editar</a>
-                    <a href="{{ route('activities.edit', $activity->id) }}" class="text-blue-500 hover:underline">Extender Fecha de Entrega</a>
-                    <a href="{{ route('activities.show', $activity->id) }}" class="text-blue-500 hover:underline">Información</a>
-                    <a href="{{ route('activities.students', $activity->id) }}" class="text-blue-500 hover:underline">Ver Estudiantes</a>
+                <td>{{ $activity->activity_name }}</td>
+                <td>{{ $activity->activity_description }}</td>
+                <td>{{ $activity->due_date }}</td>
+                <td>{{ $activity->new_due_date }}</td>
+                <td>{{ $activity->activity_percent }}%</td>
+                <td>
+                    <a href="{{ route('activities.editActivity', $activity->id) }}">Editar</a>
+                    <a href="{{ route('activities.edit', $activity->id) }}">extenter fecha de entrega</a>
+                    <a href="{{ route('activities.show', $activity->id) }}">Informacion</a>
+                    <a href="{{ route('activities.students', $activity->id) }}">Ver Estudiantes</a><!-- Ruta para ver estudiantes -->
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
     @endif
-    <a href="{{ route('activities.create') }}" class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Agregar Actividad</a>
+    <a href="{{ route('activities.create') }}">Agregar Actividad</a>
 </div>
 @endsection
