@@ -6,10 +6,10 @@
 
     <div class="card mt-4">
         <div class="card-header">
-            <h3>Actividad: {{ $activity->title }}</h3>
+            <h3>Actividad: {{ $activity->activity_name }}</h3>
         </div>
         <div class="card-body">
-            <p><strong>Estudiante:</strong> {{ $student->name }}</p>
+            <p><strong>Estudiante:</strong> {{ $student->user->name }}</p>
             <p><strong>Ruta del Archivo:</strong> 
                 <a href="{{ $submission->document_path }}" target="_blank">
                     Ver Tarea

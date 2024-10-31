@@ -11,6 +11,7 @@ class WeightedGradeCalculator implements InterfacesGradeCalculatorInterface
     {
         return $submission->criteriaGrades()
             ->join('criteria', 'criteria.id', '=', 'submission_criteria_grades.criteria_id')
-            ->sum(DB::raw('grade * percentage / 100'));
+            ->where('submission_criteria_grades.submission_id', $submission->id)
+            ->sum(DB::raw('submission_criteria_grades.grade * criteria.criterion_percent / 100'));
     }
 }

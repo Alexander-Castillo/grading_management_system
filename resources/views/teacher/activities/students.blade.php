@@ -36,7 +36,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('submission.grade', [$activity->id, $student->id]) }}">Calificar</a>
+                            <a href="{{ route('submission.gradeForm', [$activity->id, $student->id]) }}">Calificar</a>
                         </td>
                     </tr>
                 @endforeach
